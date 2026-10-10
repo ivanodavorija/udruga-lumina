@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Udruga Lumina</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <meta property="og:title" content="Udruga Lumina">
+    <meta property="og:description" content="Udruga Lumina – edukacija, kreativnost, tehnologija i zajedništvo mladih.">
+    <meta property="og:image" content="logo.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="logo.png">
+    <style>
+        /* Base Reset and Variables */
+        :root {
+            --bg-dark: #0b0f19;
+            --bg-card: #151d30;
+            --primary: #f59e0b; /* Glowing Amber */
+            --primary-hover: #d97706;
+            --secondary: #8b5cf6; /* Indigo Violet */
+            --secondary-hover: #7c3aed;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --gradient-primary: linear-gradient(135deg, #f59e0b 0%, #8b5cf6 100%);
+            --glow-primary: 0 0 20px rgba(245, 158, 11, 0.35);
+            --glow-secondary: 0 0 20px rgba(139, 92, 246, 0.35);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        /* Reusable components & Glow Gradients */
+        .glow-bg {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(245, 158, 11, 0.03) 70%, transparent 100%);
+            filter: blur(40px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.85rem 1.75rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: #0b0f19;
+            box-shadow: var(--glow-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.5), 0 0 30px rgba(139, 92, 246, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Navigation Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(11, 15, 25, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition-smooth);
+        }
+
+        header.scrolled {
+            background: rgba(11, 15, 25, 0.95);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, #fff 40%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.01em;
+        }
+
+        .logo-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: #fefaf0;
+            box-shadow: 0 0 16px rgba(245, 158, 11, 0.4);
+            border: 2px solid rgba(245, 158, 11, 0.5);
+            transition: var(--transition-smooth);
+            flex-shrink: 0;
+            display: block;
+        }
+
+        .logo:hover .logo-img {
+            transform: scale(1.08) rotate(4deg);
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.75), 0 0 15px rgba(139, 92, 246, 0.5);
+            border-color: var(--primary);
+        }
+
+        .footer-logo-img {
+            width: 48px;
+            height: 48px;
+        }
+
+        .about-logo-badge {
+            width: 105px;
+            height: 105px;
+            border-radius: 50%;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 0 35px rgba(245, 158, 11, 0.45), 0 0 20px rgba(139, 92, 246, 0.35);
+            border: 3px solid rgba(245, 158, 11, 0.55);
+            background: #fefaf0;
+            object-fit: contain;
+            transition: var(--transition-smooth);
+            animation: floatArt 7s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        .about-logo-badge:hover {
+            transform: scale(1.08) rotate(-3deg);
+            box-shadow: 0 0 45px rgba(245, 158, 11, 0.7);
+        }
+
+        .prijava-logo-badge {
+            width: 86px;
+            height: 86px;
+            border-radius: 50%;
+            border: 2px solid rgba(245, 158, 11, 0.5);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.45);
+            background: #fefaf0;
+            object-fit: contain;
+            transition: var(--transition-smooth);
+            margin-bottom: 0.5rem;
+        }
+
+        .prijava-logo-badge:hover {
+            transform: scale(1.08) rotate(4deg);
+            box-shadow: 0 0 40px rgba(245, 158, 11, 0.75);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition-smooth);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: var(--transition-smooth);
+            border-radius: 2px;
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-light);
+            margin: 5px 0;
+            transition: var(--transition-smooth);
+            border-radius: 3px;
+        }
+
+        /* Hero Section */
+        #hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            overflow: hidden;
+        }
+
+        .hero-glow-1 { top: 10%; left: -5%; }
+        .hero-glow-2 { bottom: 10%; right: -5%; width: 450px; height: 450px; }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .badge {
+            align-self: flex-start;
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 30%, #e2e8f0 60%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Hero CSS Art/Placeholder */
+        .hero-art {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .art-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+        }
+
+        .art-circle {
+            position: absolute;
+            border-radius: 50%;
+            transition: var(--transition-smooth);
+        }
+
+        .art-circle-1 {
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%);
+            border: 2px dashed rgba(139, 92, 246, 0.3);
+            animation: rotateArt 30s linear infinite;
+        }
+
+        .art-circle-2 {
+            top: 10%; left: 10%; width: 80%; height: 80%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 75%);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            animation: rotateArtCounter 20s linear infinite;
+        }
+
+        .art-core {
+            top: 18%; left: 18%; width: 64%; height: 64%;
+            background: radial-gradient(circle, #fefaf0 0%, #faede1 100%);
+            box-shadow: 0 0 35px rgba(245, 158, 11, 0.45), 0 0 60px rgba(139, 92, 246, 0.35);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: floatArt 6s ease-in-out infinite;
+            padding: 8px;
+            border: 3px solid rgba(245, 158, 11, 0.4);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .art-core:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(245, 158, 11, 0.7), 0 0 85px rgba(139, 92, 246, 0.55);
+            border-color: var(--primary);
+        }
+
+        .hero-logo-badge {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .art-core:hover .hero-logo-badge {
+            transform: rotate(3deg) scale(1.02);
+        }
+
+        @keyframes rotateArt {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes rotateArtCounter {
+            0% { transform: rotate(360deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        @keyframes floatArt {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-15px) scale(1.05); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Section Global Settings */
+        section {
+            position: relative;
+            padding: 7rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4.5rem;
+            position: relative;
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .section-title {
+            font-size: 2.75rem;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* O nama Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-text {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .about-highlight {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            font-weight: 600;
+            border-left: 4px solid var(--primary);
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        /* Values Grid */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .value-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at top right, rgba(245, 158, 11, 0.08) 0%, transparent 60%);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(245, 158, 11, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .value-card:hover::before {
+            opacity: 1;
+        }
+
+        .value-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            transition: var(--transition-smooth);
+        }
+
+        .value-card:hover .value-icon {
+            background: var(--primary);
+            color: var(--bg-dark);
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .value-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .value-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Eureka Moment / Origin Story */
+        .eureka-box {
+            margin-top: 4rem;
+            background: radial-gradient(100% 100% at top left, rgba(30, 27, 75, 0.45) 0%, rgba(21, 29, 48, 0.8) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            border-radius: 28px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+        }
+
+        .eureka-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .eureka-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(245, 158, 11, 0.12);
+            color: var(--primary);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 50px;
+            padding: 0.4rem 1.2rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.25rem;
+        }
+
+        .eureka-bulb {
+            font-size: 1.2rem;
+            filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.6));
+        }
+
+        .eureka-heading {
+            font-size: 2.1rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 40%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .eureka-text {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            max-width: 750px;
+            margin: 0 auto 1.5rem auto;
+            line-height: 1.8;
+        }
+
+        .eureka-motto {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(245, 158, 11, 0.15) 100%);
+            border: 1px dashed rgba(245, 158, 11, 0.45);
+            border-radius: 16px;
+            padding: 0.75rem 1.75rem;
+            font-size: 1.1rem;
+            font-weight: 800;
+            font-style: italic;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+        }
+
+        /* Upoznaj naš tim Section */
+        .team-section-wrapper {
+            margin-top: 5rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.75rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .team-card {
+            background: linear-gradient(145deg, rgba(21, 29, 48, 0.85) 0%, rgba(15, 20, 35, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2.5rem 1.5rem 2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.08) 0%, rgba(139, 92, 246, 0.06) 40%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .team-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.5), rgba(139, 92, 246, 0.5), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(245, 158, 11, 0.35);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(245, 158, 11, 0.1),
+                0 0 60px rgba(139, 92, 246, 0.08);
+        }
+
+        .team-card:hover::before,
+        .team-card:hover::after {
+            opacity: 1;
+        }
+
+        .team-avatar-wrapper {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.5) 0%, rgba(139, 92, 246, 0.4) 50%, rgba(245, 158, 11, 0.2) 100%);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 18px rgba(245, 158, 11, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Animated glow ring behind avatar */
+        .team-avatar-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                rgba(245, 158, 11, 0.7),
+                rgba(139, 92, 246, 0.7),
+                rgba(245, 158, 11, 0.15),
+                rgba(139, 92, 246, 0.7),
+                rgba(245, 158, 11, 0.7)
+            );
+            animation: ringRotate 6s linear infinite;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            filter: blur(2px);
+            z-index: 0;
+        }
+
+        .team-card:hover .team-avatar-wrapper {
+            transform: translateY(-3px) scale(1.03);
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.9) 0%, rgba(139, 92, 246, 0.8) 100%);
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.55), 0 0 25px rgba(245, 158, 11, 0.35);
+        }
+
+        .team-card:hover .team-avatar-wrapper::before {
+            opacity: 1;
+        }
+
+        @keyframes ringRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Inner container clipping */
+        .team-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center center;
+            border: 2px solid rgba(11, 15, 25, 0.9);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1;
+            background: #151d30;
+            filter: contrast(1.03) saturate(1.02);
+        }
+
+        .team-card:hover .team-avatar {
+            transform: scale(1.04);
+            filter: contrast(1.06) saturate(1.05);
+        }
+
+        .team-name {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            margin-bottom: 0.7rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .team-role {
+            display: inline-block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #d1d5db;
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.35);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            line-height: 1.3;
+            position: relative;
+            z-index: 1;
+            transition: var(--transition-smooth);
+        }
+
+        .team-card:hover .team-role {
+            background: rgba(139, 92, 246, 0.25);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        .team-role.role-president {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.4);
+            color: var(--primary);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.1);
+        }
+
+        .team-card:hover .team-role.role-president {
+            background: rgba(245, 158, 11, 0.25);
+            border-color: rgba(245, 158, 11, 0.6);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+        }
+
+        .team-role.role-vp {
+            background: rgba(99, 102, 241, 0.18);
+            border-color: rgba(99, 102, 241, 0.4);
+            color: #c7d2fe;
+        }
+
+        /* Dominik Karaula Featured Spotlight Card */
+        .advisor-card {
+            background: linear-gradient(145deg, rgba(21, 29, 48, 0.9) 0%, rgba(11, 15, 25, 0.95) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 28px;
+            padding: 3rem 3.5rem;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .advisor-card:hover {
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.55),
+                0 0 40px rgba(139, 92, 246, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .advisor-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: linear-gradient(180deg, var(--secondary) 0%, var(--primary) 100%);
+        }
+
+        .advisor-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.4), rgba(245, 158, 11, 0.3), transparent);
+        }
+
+        .advisor-avatar-container {
+            flex-shrink: 0;
+            width: 175px;
+            height: 175px;
+            position: relative;
+            border-radius: 50%;
+            padding: 5px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.7) 0%, rgba(245, 158, 11, 0.5) 50%, rgba(139, 92, 246, 0.3) 100%);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(139, 92, 246, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Animated ring for advisor */
+        .advisor-avatar-container::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                rgba(139, 92, 246, 0.8),
+                rgba(245, 158, 11, 0.6),
+                rgba(139, 92, 246, 0.2),
+                rgba(245, 158, 11, 0.6),
+                rgba(139, 92, 246, 0.8)
+            );
+            animation: ringRotate 8s linear infinite;
+            filter: blur(2px);
+            z-index: 0;
+        }
+
+        .advisor-card:hover .advisor-avatar-container {
+            transform: scale(1.03);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.9) 0%, rgba(245, 158, 11, 0.7) 100%);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.65), 0 0 40px rgba(139, 92, 246, 0.4);
+        }
+
+        .advisor-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center center;
+            border: 2px solid rgba(11, 15, 25, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #151d30;
+            filter: contrast(1.03) saturate(1.02);
+        }
+
+        .advisor-card:hover .advisor-avatar {
+            transform: scale(1.03);
+            filter: contrast(1.06) saturate(1.05);
+        }
+
+        .advisor-badge {
+            display: inline-block;
+            background: rgba(139, 92, 246, 0.15);
+            color: #c4b5fd;
+            border: 1px solid rgba(139, 92, 246, 0.35);
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        .advisor-name {
+            font-size: 1.85rem;
+            color: var(--text-light);
+            margin-bottom: 0.35rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .advisor-role {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .advisor-desc {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.75;
+            margin-bottom: 0.75rem;
+        }
+
+        .advisor-desc strong {
+            color: var(--text-light);
+        }
+
+        /* Prijava (Sign-Up) Section */
+        #prijava {
+            overflow: hidden;
+        }
+
+        .prijava-glow {
+            top: 20%; left: 50%; transform: translateX(-50%); width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, rgba(139, 92, 246, 0.1) 50%, transparent 100%);
+        }
+
+        .prijava-box {
+            background: radial-gradient(100% 100% at top left, rgba(21, 29, 48, 0.95) 0%, rgba(11, 15, 25, 0.95) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            border-radius: 30px;
+            padding: 5rem 3rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .prijava-box::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.3) 0%, rgba(139, 92, 246, 0) 40%, rgba(139, 92, 246, 0.3) 100%);
+            z-index: -1;
+            border-radius: 31px;
+            pointer-events: none;
+        }
+
+        .prijava-title {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #fff 40%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .prijava-text {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .prijava-btn {
+            font-size: 1.15rem;
+            padding: 1rem 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Footer Section */
+        footer {
+            background: #070a11;
+            padding: 5rem 0 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .footer-desc {
+            color: var(--text-muted);
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: -8px;
+            width: 30px; height: 2px;
+            background: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .footer-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .contact-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .contact-item svg {
+            color: var(--primary);
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            transition: var(--transition-smooth);
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+            transform: translateY(-5px) rotate(8deg);
+            box-shadow: var(--glow-primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* Responsiveness Media Queries */
+        @media (max-width: 1024px) {
+            .hero-title { font-size: 3.2rem; }
+            .hero-content { gap: 2rem; }
+            .team-grid { grid-template-columns: repeat(3, 1fr); }
+            .values-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-content { gap: 3rem; }
+        }
+
+        @media (max-width: 768px) {
+            section { padding: 5rem 0; }
+            .section-title { font-size: 2.2rem; }
+            
+            /* Navbar on Mobile */
+            .hamburger { display: block; }
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(11, 15, 25, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2.5rem;
+                transition: var(--transition-smooth);
+                border-top: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .nav-link {
+                font-size: 1.3rem;
+            }
+
+            /* Hero on Mobile */
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+
+            .hero-text {
+                align-items: center;
+            }
+
+            .badge {
+                align-self: center;
+            }
+
+            .hero-desc {
+                margin: 0 auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .hero-actions .btn {
+                width: 100%;
+            }
+
+            .hero-art {
+                order: -1;
+                height: 300px;
+            }
+
+            /* About & Values on Mobile */
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Team & Register on Mobile */
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.25rem;
+            }
+
+            .advisor-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 2.25rem 1.5rem;
+                gap: 1.75rem;
+            }
+
+            .prijava-box {
+                padding: 3rem 1.5rem;
+            }
+
+            .prijava-title {
+                font-size: 2.2rem;
+            }
+
+            /* Footer on Mobile */
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .art-container {
+                width: 250px;
+                height: 250px;
+            }
+            .logo {
+                font-size: 1.25rem;
+                gap: 0.6rem;
+            }
+            .logo-img {
+                width: 38px;
+                height: 38px;
+            }
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            .eureka-box {
+                padding: 2rem 1.25rem;
+            }
+            .eureka-heading {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* SVG & Hamburger Active States */
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SVG Gradients -->
+    <svg style="width:0; height:0; position:absolute;">
+        <defs>
+            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f59e0b" />
+                <stop offset="100%" stop-color="#8b5cf6" />
+            </linearGradient>
+            <linearGradient id="svgGradient-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.2" />
+                <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.8" />
+            </linearGradient>
+            <linearGradient id="svgGradient-2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.3" />
+                <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.9" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <!-- Header / Nav -->
+    <header id="header">
+        <div class="container nav-container">
+            <a href="#hero" class="logo">
+                <img src="logo.png" alt="Udruga Lumina Logo" class="logo-img">
+                <span class="logo-text">Udruga Lumina</span>
+            </a>
+            <button class="hamburger" id="hamburger-btn" aria-label="Otvaranje izbornika">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#hero" class="nav-link active">Početna</a></li>
+                <li><a href="#o-nama" class="nav-link">O nama</a></li>
+
+                <li><a href="#prijava" class="nav-link">Prijava</a></li>
+                <li><a href="#kontakt" class="nav-link">Kontakt</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="glow-bg hero-glow-1"></div>
+        <div class="glow-bg hero-glow-2"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <span class="badge">Nove prijave u tijeku</span>
+                    <h1 class="hero-title">Udruga Lumina</h1>
+                    <p class="hero-desc">Mi smo zajednica posvećena poticanju kreativnosti, znanja i osobnog rasta. Kroz brojne radionice, inovativne projekte i društvene inicijative, pomažemo mladima i lokalnoj zajednici da ostvare svoj puni potencijal.</p>
+                    <div class="hero-actions">
+                        <a href="#prijava" class="btn btn-primary">
+                            Prijavi se
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                        <a href="#o-nama" class="btn btn-secondary">Saznaj više</a>
+                    </div>
+                </div>
+                <div class="hero-art">
+                    <div class="art-container">
+                        <div class="art-circle art-circle-1"></div>
+                        <div class="art-circle art-circle-2"></div>
+                        <div class="art-core" title="Udruga Lumina">
+                            <img src="logo.png" alt="Udruga Lumina" class="hero-logo-badge">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- O nama Section -->
+    <section id="o-nama">
+        <div class="glow-bg" style="top:30%; left:-10%;"></div>
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Tko smo mi</span>
+                <h2 class="section-title">Osvjetljavamo put prema naprijed</h2>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="about-highlight">Udruga Lumina osnovana je s ciljem pružanja prostora u kojem se ideje pretvaraju u stvarnost, a potencijal pojedinca u snagu zajednice.</div>
+                    <p>Vjerujemo da svatko posjeduje jedinstvenu svjetlost – talent koji zaslužuje biti otkriven i podržan. Našim djelovanjem nastojimo stvoriti poticajno okruženje u kojem se cijene inovacija, neprestano učenje i inkluzivnost.</p>
+                    <p>Provodimo različite projekte na području neformalnog obrazovanja, dizajna, novih medija i ekološke održivosti te potičemo mlade na preuzimanje aktivne uloge u društvu.</p>
+                </div>
+                
+                <div style="position:relative; width:100%; height:320px; display:flex; align-items:center; justify-content:center;">
+                    <!-- Beautiful CSS Concept Graphic for Lumina Values -->
+                    <div style="position:absolute; width:100%; height:100%; background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%); border-radius:30px; border: 1px dashed rgba(255,255,255,0.1); overflow:hidden;">
+                        <!-- Soft abstract grid pattern inside graphic -->
+                        <div style="position:absolute; width:100%; height:100%; background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 20px 20px;"></div>
+                        <!-- Geometric elements -->
+                        <div style="position:absolute; top:20%; left:25%; width:100px; height:100px; border-radius:30px; background:linear-gradient(45deg, var(--secondary), transparent); transform:rotate(45deg); filter:blur(10px); opacity:0.6;"></div>
+                        <div style="position:absolute; bottom:15%; right:20%; width:140px; height:140px; border-radius:50%; background:linear-gradient(45deg, var(--primary), transparent); filter:blur(15px); opacity:0.4;"></div>
+                        
+                        <!-- Main Central Element -->
+                        <div style="position:relative; text-align:center; padding: 2rem; z-index: 1; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%;">
+                            <img src="logo.png" alt="Udruga Lumina Logo" class="about-logo-badge">
+                            <span style="font-size:1.5rem; font-weight:800; color:#FFF; text-shadow:0 0 10px rgba(0,0,0,0.5);">"Inspiriramo, educiramo, povezujemo."</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="values-grid">
+                <!-- Value 1 -->
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"></line><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line><line x1="6.34" y1="17.66" x2="4.93" y2="19.07"></line><line x1="19.07" y1="4.93" x2="17.66" y2="6.34"></line></svg>
+                    </div>
+                    <h3 class="value-title">Jasna Vizija</h3>
+                    <p class="value-desc">Jasno vidimo put prema modernom društvu utemeljenom na znanju, razumijevanju tehnologija i suradnji svih generacija.</p>
+                </div>
+                <!-- Value 2 -->
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2Z"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    </div>
+                    <h3 class="value-title">Svestranost</h3>
+                    <p class="value-desc">Naše se aktivnosti protežu od digitalne pismenosti i programiranja do kreativnih, umjetničkih radionica i potpore obiteljima.</p>
+                </div>
+                <!-- Value 3 -->
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <h3 class="value-title">Zajedništvo</h3>
+                    <p class="value-desc">Snaga leži u međusobnom povezivanju. Gradimo sigurno okruženje gdje se razmjenjuju ideje, stječu prijatelji i razvijaju rješenja.</p>
+                </div>
+            </div>
+
+            <!-- Eureka Moment -->
+            <div class="eureka-box">
+                <div class="eureka-badge"><span class="eureka-bulb">💡</span> Eureka!</div>
+                <h3 class="eureka-heading">Kako je sve počelo?</h3>
+                <p class="eureka-text">Pet pojedinaca kojima je ideja za udrugu iskočila kao žaruljica iznad glave dok su sjedili za stolom i pili kavu. U čast tom <em>Eureka!</em> trenutku, žaruljica je dobila počasno mjesto u imenu udruge i logu.</p>
+                <span class="eureka-motto">"Follow the light, explore everything."</span>
+            </div>
+
+            <!-- Upoznaj naš tim -->
+            <div class="team-section-wrapper">
+                <div class="section-header">
+                    <span class="section-subtitle">Naš tim</span>
+                    <h2 class="section-title">Upoznaj naš tim</h2>
+                </div>
+
+                <div class="team-grid">
+                    <!-- Vedran Klečina -->
+                    <div class="team-card">
+                        <div class="team-avatar-wrapper">
+                            <img src="vedran.png" alt="Vedran Klečina" class="team-avatar">
+                        </div>
+                        <h3 class="team-name">Vedran Klečina</h3>
+                        <span class="team-role role-president">Predsjednik</span>
+                    </div>
+                    <!-- Matej Nogić -->
+                    <div class="team-card">
+                        <div class="team-avatar-wrapper">
+                            <img src="matej.png" alt="Matej Nogić" class="team-avatar">
+                        </div>
+                        <h3 class="team-name">Matej Nogić</h3>
+                        <span class="team-role role-vp">Potpredsjednik</span>
+                    </div>
+                    <!-- Laura Lasan -->
+                    <div class="team-card">
+                        <div class="team-avatar-wrapper">
+                            <img src="laura.png" alt="Laura Lasan" class="team-avatar">
+                        </div>
+                        <h3 class="team-name">Laura Lasan</h3>
+                        <span class="team-role">Tajnica</span>
+                    </div>
+                    <!-- Stjepan Gregurić -->
+                    <div class="team-card">
+                        <div class="team-avatar-wrapper">
+                            <img src="stjepan.png" alt="Stjepan Gregurić" class="team-avatar">
+                        </div>
+                        <h3 class="team-name">Stjepan Gregurić</h3>
+                        <span class="team-role">Blagajnik</span>
+                    </div>
+                    <!-- Toni Barić -->
+                    <div class="team-card">
+                        <div class="team-avatar-wrapper">
+                            <img src="toni.png" alt="Toni Barić" class="team-avatar">
+                        </div>
+                        <h3 class="team-name">Toni Barić</h3>
+                        <span class="team-role">Zapisničar</span>
+                    </div>
+                </div>
+
+                <!-- Dominik Karaula - Featured Advisor -->
+                <div class="advisor-card">
+                    <div class="advisor-avatar-container">
+                        <img src="dominik.png" alt="Dominik Karaula" class="advisor-avatar">
+                    </div>
+                    <div class="advisor-info">
+                        <span class="advisor-badge">✨ Poseban član</span>
+                        <h3 class="advisor-name">Dominik Karaula</h3>
+                        <p class="advisor-role">Prvi član i savjetnik udruge Lumina</p>
+                        <p class="advisor-desc">Osoba koju ćete često viđati kod nas u udruzi jest Dominik! Prvi član i savjetnik udruge Lumina koji nam je od samog početka velika podrška.</p>
+                        <p class="advisor-desc">Dominik također vodi svoju umjetničku organizaciju <strong>Glinjol Teatar</strong> s kojom se udruga Lumina veseli ostvariti brojne suradnje! 🎭</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Prijava (Sign-Up Form) Section -->
+    <section id="prijava">
+        <div class="glow-bg prijava-glow"></div>
+        <div class="container">
+            <div class="prijava-box">
+                <img src="logo.png" alt="Udruga Lumina" class="prijava-logo-badge">
+                <h2 class="prijava-title">Postani dio Lumina priče</h2>
+                <p class="prijava-text">Pridruži se našoj zajednici i postani član Udruge Lumina! Članstvom ostvaruješ pravo na sudjelovanje u svim radionicama, edukacijama i kulturnim događanjima. Godišnja članarina iznosi <b>20 €</b>, a potvrdu o uplati potrebno je poslati na <b>info@udruga-lumina.hr</b>.</p>
+                <div class="prijava-details" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; text-align: left; max-width: 600px;">
+                    <p style="margin-bottom: 0.5rem;"><b>Podaci za uplatu:</b><br>
+                    IBAN: HR1123400091111367637<br>
+                    OIB: 94073197511<br>
+                    Adresa: Frankopanska ulica 61, 44400 Glina</p>
+                    <p><i>* Za maloljetne osobe potrebna je suglasnost roditelja/skrbnika koja se šalje putem e-maila.</i></p>
+                </div>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdwzMEtKb7tpO4f3EQfLEPlUxSrhEhwAbf7O6n49Wbqm6xY-w/viewform" target="_blank" rel="noopener noreferrer" class="btn btn-primary prijava-btn">
+                    Ispuni prijavnicu
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Kontakt Section -->
+    <footer id="kontakt">
+        <div class="container">
+            <div class="footer-grid">
+                
+                <!-- Brand Block -->
+                <div class="footer-brand">
+                    <a href="#hero" class="logo">
+                        <img src="logo.png" alt="Udruga Lumina Logo" class="logo-img footer-logo-img">
+                        <span class="logo-text">Udruga Lumina</span>
+                    </a>
+                    <p class="footer-desc">Neprofitna udruga posvećena osobnom i profesionalnom razvoju mladih te unaprjeđenju kvalitete života lokalne zajednice kroz edukaciju, kulturu i inovativnost.</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/udruga_lumina/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Lumina Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=61586720795209" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Lumina Facebook">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Fast Links Block -->
+                <div>
+                    <h3 class="footer-title">Brzi linkovi</h3>
+                    <ul class="footer-links">
+                        <li><a href="#hero" class="footer-link">Početna</a></li>
+                        <li><a href="#o-nama" class="footer-link">O nama</a></li>
+
+                        <li><a href="#prijava" class="footer-link">Učlani se</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contacts Block -->
+                <div>
+                    <h3 class="footer-title">Kontakt podaci</h3>
+                    <ul class="contact-list" style="gap: 0.6rem;">
+                        <li class="contact-item" style="color: var(--text-light); font-weight: 700;">
+                            <span>UDRUGA LUMINA</span>
+                        </li>
+                        <li class="contact-item">
+                            <span>Frankopanska ulica 61, 44400 Glina</span>
+                        </li>
+                        <li class="contact-item">
+                            <span>OIB: 94073197511</span>
+                        </li>
+                        <li class="contact-item">
+                            <span>IBAN: HR1123400091111367637</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Bottom Credits -->
+            <div class="footer-bottom">
+                <div>&copy; 2026 Udruga Lumina. Sva prava pridržana.</div>
+                <div>Dizajnirano s 💡 i 💛 za Udrugu Lumina.</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        // Navbar Scrolled Effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Hamburger Menu Toggle
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const navMenu = document.getElementById('nav-menu');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            // Disable background scrolling when menu is active
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close menu when link is clicked
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // Smooth Scrolling Active Section Highlight
+        const sections = document.querySelectorAll('section, footer');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const scrollPos = window.scrollY + 120; // offset
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
